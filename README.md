@@ -1,34 +1,115 @@
-# A Machine Learning Framework for Evaluating the Net Energy Implications of Urban Greening in Desalination-Dependent Cities
+# Evaluating Urban Greening Energy Trade-Offs Using the Net Energy Gain Index (NEGI)
 
-This repository contains the Python implementation of a data-driven framework for evaluating the energy trade-offs associated with urban greening in arid, desalination-dependent cities.
+This repository contains the Python implementation accompanying the manuscript:
 
-Using Jeddah, Saudi Arabia as a case study, the framework integrates Landsat 8 satellite observations, machine learning-based land surface temperature prediction, and a scenario-based energy assessment model to evaluate the balance between vegetation-induced cooling benefits and desalination-related irrigation energy requirements.
+> **Evaluating Urban Greening Energy Trade-Offs in Desalination-Dependent Cities Using Machine Learning and the Net Energy Gain Index (NEGI)**
 
-Core Features
-- Google Earth Engine preprocessing of Landsat 8 imagery
-- Extraction of NDVI, NDBI, and Land Surface Temperature (LST)
-- XGBoost-based prediction of urban thermal conditions
-- Fractional Vegetation Cover (FVC) scenario analysis
-- Estimation of desalination-related energy indicators using SWRO energy intensity values
-- Computation of a Net Energy Gain Index (NEGI) for comparing alternative greening scenarios
-- Identification of vegetation thresholds associated with maximum NEGI performance
+The framework evaluates the net energy implications of urban greening by integrating satellite remote sensing, machine learning, and desalination-related energy assessment. Using **Jeddah, Saudi Arabia**, as a case study, the methodology combines Landsat 8 observations, XGBoost regression, and scenario analysis to identify vegetation levels that maximize relative net energy performance.
 
-Methodological Workflow
-1. Acquire and preprocess Landsat 8 imagery using Google Earth Engine.
-2. Derive NDVI, NDBI, and LST datasets.
-3. Train an XGBoost regression model to predict LST from NDVI and NDBI.
-4. Simulate urban greening scenarios using increasing Fractional Vegetation Cover (FVC).
-5. Estimate cooling-energy benefit indicators from predicted temperature reductions.
-6. Estimate desalination-related energy indicators using literature-based SWRO energy coefficients.
-7. Calculate the Net Energy Gain Index (NEGI) and identify optimal greening thresholds.
+---
 
-Repository Structure
+## Features
+
+* Landsat 8 preprocessing using Google Earth Engine
+* Extraction of NDVI, NDBI, and Land Surface Temperature (LST)
+* XGBoost regression for urban thermal prediction
+* Fractional Vegetation Cover (FVC) scenario simulation
+* Desalination-related energy assessment using SWRO energy intensity
+* Net Energy Gain Index (NEGI) computation
+* Sensitivity analysis of model parameters
+* Automatic generation of publication-ready figures and tables
+
+---
+
+## Methodological Workflow
+
+1. Acquire Landsat 8 imagery using Google Earth Engine.
+2. Derive NDVI, NDBI, and Land Surface Temperature (LST).
+3. Train an XGBoost regression model using NDVI and NDBI.
+4. Simulate urban greening scenarios using Fractional Vegetation Cover (FVC).
+5. Estimate relative cooling-energy benefits.
+6. Estimate desalination-related irrigation energy requirements.
+7. Compute the Net Energy Gain Index (NEGI).
+8. Identify the vegetation threshold that maximizes relative net energy performance.
+
+---
+
+## Repository Structure
 
 ```
-├── data/
-├── plots/
-├── src/
-├── main.py
-├── requirements.txt
+.
+├── data/                  # Processed datasets
+├── plots/                 # Generated figures
+├── src/                   # Source code
+├── main.py                # Main workflow
+├── requirements.txt       # Python dependencies
 └── README.md
 ```
+
+---
+
+## Requirements
+
+Python 3.10 or later
+
+Required packages are listed in:
+
+```
+requirements.txt
+```
+
+Install all dependencies using:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Running the Code
+
+Execute the complete workflow with:
+
+```bash
+python main.py
+```
+
+The script performs:
+
+* Data loading
+* Machine learning model training
+* Model evaluation
+* Scenario simulation
+* NEGI calculation
+* Sensitivity analysis
+* Figure generation
+
+---
+
+## Data
+
+Satellite observations were derived from **Landsat 8** imagery processed using **Google Earth Engine**.
+
+The processed dataset contains approximately **15,000 observations**, including:
+
+* NDVI
+* NDBI
+* Land Surface Temperature (LST)
+
+---
+
+## Reproducibility
+
+This repository contains the code used to generate the analyses, figures, and tables presented in the accompanying manuscript. The workflow is fully reproducible using the processed dataset included in the repository.
+
+---
+
+## Citation
+
+If you use this repository, please cite the accompanying publication once available.
+
+---
+
+## License
+
+This repository is released under the MIT License.
