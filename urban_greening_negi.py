@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,11 +8,12 @@ from xgboost import XGBRegressor
 from sklearn.model_selection import train_test_split, cross_val_score, KFold
 from sklearn.metrics import mean_squared_error, r2_score
 
+os.makedirs("data", exist_ok=True)
+os.makedirs("plots", exist_ok=True)
+
 print("Scikit-learn version:", sklearn.__version__)
 
-df = pd.read_csv(
-    r"C:\Users\Nelly\Downloads\Jeddah_NDVI_NDBI_LST_dataset.csv"
-)
+df = pd.read_csv("data/Jeddah_NDVI_NDBI_LST_dataset.csv")
 
 print(df.head())
 print(df.columns)
@@ -78,40 +80,44 @@ plt.bar(
 plt.ylabel("Importance Score")
 plt.title("XGBoost Feature Importance")
 plt.savefig(
-    "Figure_Feature_Importance.png",
+    "plots/Figure_Feature_Importance.png",
     dpi=300,
     bbox_inches="tight"
 )
 plt.show()
 
-# FIGURE 1: NDVI Distribution
+
+# FIGURES SECTION
+
+
+# NDVI Distribution Figure
 plt.figure()
 plt.hist(df["NDVI"], bins=40)
 plt.title("NDVI Distribution in Jeddah")
 plt.xlabel("NDVI")
 plt.ylabel("Frequency")
-plt.savefig("Figure1_NDVI_Distribution.png", dpi=300, bbox_inches="tight")
+plt.savefig("plots/Figure1_NDVI_Distribution.png", dpi=300, bbox_inches="tight")
 plt.show()
 
-# FIGURE 2: NDBI Distribution
+# NDBI Distribution Figure
 plt.figure()
 plt.hist(df["NDBI"], bins=40)
 plt.title("NDBI Distribution in Jeddah")
 plt.xlabel("NDBI")
 plt.ylabel("Frequency")
-plt.savefig("Figure2_NDBI_Distribution.png", dpi=300, bbox_inches="tight")
+plt.savefig("plots/Figure2_NDBI_Distribution.png", dpi=300, bbox_inches="tight")
 plt.show()
 
-# FIGURE 3: NDVI vs LST
+# NDVI vs LST Figure
 plt.figure()
 plt.scatter(df["NDVI"], df["LST"], alpha=0.3)
 plt.title("NDVI vs Land Surface Temperature (Jeddah)")
 plt.xlabel("NDVI")
 plt.ylabel("LST (°C)")
-plt.savefig("Figure3_NDVI_vs_LST.png", dpi=300, bbox_inches="tight")
+plt.savefig("plots/Figure3_NDVI_vs_LST.png", dpi=300, bbox_inches="tight")
 plt.show()
 
-# FIGURE 4: Actual vs Predicted LST
+# Actual vs Predicted LST Figure
 plt.figure()
 plt.scatter(y_test, pred, alpha=0.4)
 plt.plot(
@@ -121,10 +127,10 @@ plt.plot(
 plt.title("XGBoost Model Performance")
 plt.xlabel("Actual LST (°C)")
 plt.ylabel("Predicted LST (°C)")
-plt.savefig("Figure4_Actual_vs_Predicted.png", dpi=300, bbox_inches="tight")
+plt.savefig("plots/Figure4_Actual_vs_Predicted.png", dpi=300, bbox_inches="tight")
 plt.show()
 
-# FIGURE 5: Residual Analysis
+# Residual Analysis Figure
 residuals = y_test - pred
 
 plt.figure()
@@ -134,7 +140,7 @@ plt.xlabel("Predicted LST (°C)")
 plt.ylabel("Residuals (°C)")
 plt.title("Residual Plot")
 plt.savefig(
-    "Figure5_Residuals.png",
+    "plots/Figure5_Residuals.png",
     dpi=300,
     bbox_inches="tight"
 )
@@ -193,6 +199,8 @@ desalination_energy = irrigation_index * desal_energy_intensity
 alpha = 10  # empirical scaling coefficient
 cooling_energy_equivalent = delta_T * alpha
 
+# Compute Net Energy Gain Index (NEGI) Figure
+
 NEGI = cooling_energy_equivalent - desalination_energy
 
 scenario_results = pd.DataFrame({
@@ -205,9 +213,9 @@ scenario_results = pd.DataFrame({
     "NEGI": NEGI
 })
 
-scenario_results.to_csv("Scenario_Results.csv", index=False)
+scenario_results.to_csv("data/Scenario_Results.csv", index=False)
 
-# FIGURE 6: Cooling Benefit vs Energy Cost
+# Cooling Benefit vs Energy Cost Figure
 plt.figure()
 plt.plot(
     scenarios * 100,
@@ -226,13 +234,13 @@ plt.ylabel("Energy")
 plt.title("Cooling Benefit vs Desalination Energy Consumption")
 plt.legend()
 plt.savefig(
-    "Figure6_Cooling_vs_Energy.png",
+    "plots/Figure6_Cooling_vs_Energy.png",
     dpi=300,
     bbox_inches="tight"
 )
 plt.show()
 
-# FIGURE 7: NEGI Curve
+# NEGI Curve Figure
 plt.figure()
 plt.plot(scenarios * 100, NEGI, marker="o")
 plt.axhline(0, linestyle="--")
@@ -240,13 +248,13 @@ plt.xlabel("Fractional Vegetation Cover (%)")
 plt.ylabel("NEGI")
 plt.title("Net Energy Gain Index")
 plt.savefig(
-    "Figure7_NEGI_Curve.png",
+    "plots/Figure7_NEGI_Curve.png",
     dpi=300,
     bbox_inches="tight"
 )
 plt.show()
 
-# FIGURE 8: Optimal Threshold
+# Optimal Threshold Figure
 optimal_index = np.argmax(NEGI)
 optimal_fvc = scenarios[optimal_index] * 100
 
@@ -263,7 +271,7 @@ plt.ylabel("NEGI")
 plt.title("Optimal Vegetation Threshold")
 plt.legend()
 plt.savefig(
-    "Figure8_Optimal_Threshold.png",
+    "plots/Figure8_Optimal_Threshold.png",
     dpi=300,
     bbox_inches="tight"
 )
@@ -305,9 +313,9 @@ sensitivity_df = pd.DataFrame(results)
 print("\nSensitivity Analysis")
 print(sensitivity_df)
 
-sensitivity_df.to_csv("Sensitivity_Analysis.csv", index=False)
+sensitivity_df.to_csv("data/Sensitivity_Analysis.csv", index=False)
 
-# FIGURE 9: Sensitivity Analysis
+# Sensitivity Analysis Figure
 plt.figure(figsize=(8, 5))
 
 for alpha_test in alpha_values:
@@ -324,7 +332,7 @@ plt.ylabel("Maximum NEGI")
 plt.title("Sensitivity of NEGI to Scaling Coefficients")
 plt.legend()
 plt.savefig(
-    "Figure9_Sensitivity_Analysis.png",
+    "plots/Figure9_Sensitivity_Analysis.png",
     dpi=300,
     bbox_inches="tight"
 )
