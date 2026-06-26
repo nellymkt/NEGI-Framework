@@ -35,15 +35,19 @@ The framework evaluates the net energy implications of urban greening by integra
 ---
 
 ## Repository Structure
-
 ```
 .
-├── data/                  # Processed datasets
-├── plots/                 # Generated figures
-├── src/                   # Source code
-├── main.py                # Main workflow
-├── requirements.txt       # Python dependencies
-└── README.md
+├── data/
+│   ├── Jeddah_NDVI_NDBI_LST_dataset.csv
+│   ├── Scenario_Results.csv
+│   └── Sensitivity_Analysis.csv
+├── src/
+│   └── negi_framework.py
+├── requirements.txt
+├── README.md
+├── LICENSE
+├── CITATION.cff
+└── .gitignore
 ```
 
 ---
