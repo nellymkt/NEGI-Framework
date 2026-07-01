@@ -141,7 +141,7 @@ Running the supplied workflow with the included processed dataset reproduces the
 
 # Citation
 
-If you use this repository in your research, please cite the accompanying publication once available.
+If you use this repository, please cite this software repository and the accompanying journal article.
 
 GitHub will automatically generate a citation from the included **CITATION.cff** file.
 
